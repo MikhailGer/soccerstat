@@ -10,14 +10,16 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'https://api.football-data.org/v4',
+          target: 'https://api.football-data.org',
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
-          headers: apiToken
-            ? {
-                'X-Auth-Token': apiToken,
+          rewrite: (path) => path.replace(/^\/api/, '/v4'),
+          configure: (proxy) => {
+            proxy.on('proxyReq', (proxyReq) => {
+              if (apiToken) {
+                proxyReq.setHeader('X-Auth-Token', apiToken)
               }
-            : undefined,
+            })
+          },
         },
       },
     },
