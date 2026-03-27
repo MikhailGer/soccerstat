@@ -1,65 +1,9 @@
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import { CompetitionMatchesPage } from './pages/CompetitionMatchesPage'
+import { CompetitionsPage } from './pages/CompetitionsPage'
+import { TeamMatchesPage } from './pages/TeamMatchesPage'
+import { TeamsPage } from './pages/TeamsPage'
 import './App.css'
-
-function CompetitionsPage() {
-  return (
-    <section className="page">
-      <div className="page__header">
-        <span className="page__eyebrow">Раздел 1</span>
-        <h1>Лиги</h1>
-        <p>
-          Здесь будет список соревнований с поиском, пагинацией и переходом в
-          календарь выбранной лиги.
-        </p>
-      </div>
-    </section>
-  )
-}
-
-function CompetitionMatchesPage() {
-  return (
-    <section className="page">
-      <div className="page__header">
-        <span className="page__eyebrow">Раздел 2</span>
-        <h1>Календарь Лиги</h1>
-        <p>
-          Следующим шагом подключим хлебные крошки, фильтр по датам и список
-          матчей конкретного соревнования.
-        </p>
-      </div>
-    </section>
-  )
-}
-
-function TeamsPage() {
-  return (
-    <section className="page">
-      <div className="page__header">
-        <span className="page__eyebrow">Раздел 3</span>
-        <h1>Команды</h1>
-        <p>
-          Эта страница станет точкой входа в каталог команд с поиском, логотипами
-          и переходом к календарю команды.
-        </p>
-      </div>
-    </section>
-  )
-}
-
-function TeamMatchesPage() {
-  return (
-    <section className="page">
-      <div className="page__header">
-        <span className="page__eyebrow">Раздел 4</span>
-        <h1>Календарь Команды</h1>
-        <p>
-          Здесь появятся матчи выбранной команды, фильтрация по диапазону дат и
-          локальное время пользователя.
-        </p>
-      </div>
-    </section>
-  )
-}
 
 function App() {
   return (
@@ -68,7 +12,7 @@ function App() {
         <div>
           <p className="topbar__label">SoccerStat</p>
           <p className="topbar__subtitle">
-            Базовый каркас приложения для тестового задания
+            Статистика по лигам и командам в одном интерфейсе
           </p>
         </div>
 

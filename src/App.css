@@ -10,9 +10,10 @@
   align-items: center;
   padding: 24px;
   border: 1px solid var(--color-border);
-  border-radius: 24px;
+  border-radius: 28px;
   background: var(--color-surface);
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(14px);
 }
 
 .topbar__label {
@@ -35,43 +36,58 @@
   gap: 12px;
 }
 
-.topbar__link {
+.topbar__link,
+.pagination__button {
   padding: 10px 16px;
   border-radius: 999px;
   border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.78);
   color: var(--color-text);
   text-decoration: none;
+  cursor: pointer;
   transition:
     transform 160ms ease,
     border-color 160ms ease,
-    background-color 160ms ease;
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
-.topbar__link:hover {
+.topbar__link:hover,
+.pagination__button:hover:not(:disabled) {
   transform: translateY(-1px);
   border-color: var(--color-accent);
 }
 
-.topbar__link--active {
+.topbar__link--active,
+.pagination__button--active {
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: #fff;
+}
+
+.pagination__button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .content {
   margin-top: 24px;
 }
 
+.page,
+.status-panel {
+  border: 1px solid var(--color-border);
+  border-radius: 28px;
+  background: var(--color-surface);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.05);
+}
+
 .page {
   padding: 32px;
-  border: 1px solid var(--color-border);
-  border-radius: 24px;
-  background: var(--color-surface);
-  min-height: 420px;
 }
 
 .page__header {
-  max-width: 720px;
+  max-width: 760px;
 }
 
 .page__eyebrow {
@@ -87,15 +103,158 @@
 
 .page h1 {
   margin: 16px 0 12px;
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-size: clamp(2.4rem, 4vw, 3.8rem);
   line-height: 1;
 }
 
-.page p {
+.page p,
+.status-panel p {
   margin: 0;
   color: var(--color-muted);
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   line-height: 1.6;
+}
+
+.page__toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: end;
+  margin: 32px 0 24px;
+}
+
+.page__meta {
+  white-space: nowrap;
+}
+
+.search-field {
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.search-field__label {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.search-field__input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--color-text);
+}
+
+.search-field__input:focus {
+  outline: 2px solid rgba(37, 99, 235, 0.2);
+  border-color: rgba(37, 99, 235, 0.35);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card-grid--teams {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.74);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.4);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+}
+
+.card__logo {
+  display: grid;
+  place-items: center;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top, rgba(37, 99, 235, 0.12), transparent 72%),
+    #f8fafc;
+  overflow: hidden;
+}
+
+.card__logo img {
+  max-width: 40px;
+  max-height: 40px;
+  object-fit: contain;
+}
+
+.card__logo span {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.card__body {
+  min-width: 0;
+}
+
+.card__title {
+  color: var(--color-text);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.card__subtitle {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.pagination__pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.status-panel {
+  margin-top: 24px;
+  padding: 24px;
+}
+
+.status-panel h2 {
+  margin: 0 0 10px;
+  font-size: 1.4rem;
+}
+
+@media (max-width: 1100px) {
+  .card-grid,
+  .card-grid--teams {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
@@ -104,22 +263,29 @@
   }
 
   .topbar,
-  .page {
+  .page,
+  .status-panel {
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 22px;
   }
 
-  .topbar {
-    align-items: flex-start;
+  .topbar,
+  .page__toolbar,
+  .pagination {
     flex-direction: column;
+    align-items: stretch;
   }
 
-  .topbar__nav {
-    width: 100%;
+  .page__meta {
+    white-space: normal;
   }
 
-  .topbar__link {
-    flex: 1 1 auto;
-    text-align: center;
+  .card-grid,
+  .card-grid--teams {
+    grid-template-columns: 1fr;
+  }
+
+  .pagination__pages {
+    order: -1;
   }
 }
