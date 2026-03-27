@@ -63,27 +63,16 @@ export function TeamsPage() {
   }
 
   return (
-    <section className="page">
-      <div className="page__header">
-        <span className="page__eyebrow">Раздел 2</span>
-        <h1>Команды</h1>
-        <p>
-          Список команд с локальным поиском, пагинацией и переходом к календарю
-          выбранной команды.
-        </p>
-      </div>
-
-      <div className="page__toolbar">
+    <section className="page page--catalog">
+      <div className="catalog-toolbar">
         <SearchField
+          className="search-field--catalog"
           label="Поиск по командам"
-          placeholder="Например, Borussia Dortmund"
+          placeholder="Search"
           value={searchValue}
           onChange={updateSearch}
+          hideLabel
         />
-
-        <p className="page__meta">
-          Найдено: <strong>{filteredTeams.length}</strong>
-        </p>
       </div>
 
       {teamsQuery.isLoading ? (
@@ -111,10 +100,14 @@ export function TeamsPage() {
 
       {!teamsQuery.isLoading && !teamsQuery.isError && visibleTeams.length > 0 ? (
         <>
-          <div className="card-grid card-grid--teams">
+          <div className="catalog-grid">
             {visibleTeams.map((team) => (
-              <Link key={team.id} to={`/teams/${team.id}`} className="card">
-                <div className="card__logo">
+              <Link
+                key={team.id}
+                to={`/teams/${team.id}`}
+                className="catalog-card catalog-card--team"
+              >
+                <div className="catalog-card__image catalog-card__image--team">
                   {team.crest ? (
                     <img
                       src={team.crest}
@@ -122,14 +115,15 @@ export function TeamsPage() {
                       loading="lazy"
                     />
                   ) : (
-                    <span>{team.tla}</span>
+                    <span className="catalog-card__fallback">
+                      {team.tla || team.name.slice(0, 3)}
+                    </span>
                   )}
                 </div>
 
-                <div className="card__body">
-                  <p className="card__title">{team.name}</p>
-                  <p className="card__subtitle">
-                    {team.shortName || team.venue || 'Команда'}
+                <div className="catalog-card__body">
+                  <p className="catalog-card__title catalog-card__title--team">
+                    {team.name}
                   </p>
                 </div>
               </Link>

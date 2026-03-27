@@ -375,6 +375,11 @@
   object-fit: contain;
 }
 
+.catalog-card__image--team img {
+  max-width: 170px;
+  max-height: 170px;
+}
+
 .catalog-card__fallback {
   color: var(--color-primary);
   font-size: 2rem;
@@ -402,6 +407,10 @@
 
 .catalog-card__title {
   font-size: 1rem;
+}
+
+.catalog-card__title--team {
+  font-weight: 600;
 }
 
 .catalog-card__subtitle,
