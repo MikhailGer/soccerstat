@@ -1,73 +1,235 @@
-# React + TypeScript + Vite
+# SoccerStat — Приложение для просмотра спортивной статистики
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для просмотра матчей, команд и статистики футбольных лиг. Интегрировано с API [football-data.org](https://www.football-data.org/).
 
-Currently, two official plugins are available:
+## Основной функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Лиги (Соревнования)** — просмотр всех доступных футбольных лиг с поиском и пагинацией
+- **Календарь лиги** — список всех матчей лиги с фильтром по датам
+- **Команды** — просмотр всех команд с логотипами и поиском
+- **Календарь команды** — история матчей конкретной команды с фильтрацией
 
-## React Compiler
+### Дополнительные возможности
+- Текстовый поиск по лигам и командам
+- Хлебные крошки (breadcrumbs) для удобной навигации
+- Статусы матчей (запланирован, в игре, завершен и т.д.)
+- Отображение результатов с учётом основного времени, дополнительного времени и пенальти
+- Русский интерфейс с локализацией времени (UTC → локальное)
+- Адаптивный дизайн (мобильная, планшет, десктоп)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Технологический стек
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```
+Frontend:
+├── React 19.2.4          - UI фреймворк
+├── TypeScript 5.9        - Статическая типизация
+├── Vite 8               - Build tool 
+├── React Router 7       - Маршрутизация
+├── React Query 5        - Управление состоянием и кэширование
+├── Axios               - HTTP клиент
+└── ESLint             - Линтинг кода
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Стилизация:
+└── CSS3 с CSS переменными
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+API:
+└── football-data.org REST API (v4)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+##  Начало работы
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Требования
+- **Node.js**: 18+ версия
+- **npm**: 8+
+
+### Установка
+
+```bash
+# Клонировать репозиторий
+git clone https://github.com/your-username/soccerstat.git
+cd soccerstat
+
+# Установить зависимости
+npm install
 ```
+
+### Конфигурация API
+
+1. **Получить токен** на https://www.football-data.org/
+2. **Создать `.env` файл** в корне проекта:
+
+```bash
+# .env
+VITE_API_TOKEN=your_token_here
+```
+
+Токен НЕ должен быть в коде! Используйте переменные окружения.
+
+### Запуск разработки
+
+```bash
+npm run dev
+```
+
+Откроется на `http://localhost:5173` с HMR (горячая перезагрузка)
+
+### Сборка для production
+
+```bash
+# Собрать проект
+npm run build
+
+# Проверить собранную версию
+npm run preview
+```
+
+---
+
+## Структура проекта
+
+```
+src/
+├── pages/
+│   ├── CompetitionsPage.tsx       # Страница лиг
+│   ├── CompetitionMatchesPage.tsx # Календарь лиги
+│   ├── TeamsPage.tsx              # Страница команд
+│   └── TeamMatchesPage.tsx        # Календарь команды
+│
+├── components/
+│   ├── Breadcrumbs.tsx            # Хлебные крошки
+│   ├── SearchField.tsx            # Поиск
+│   ├── DateRangeFilter.tsx        # Фильтр по датам
+│   ├── MatchesList.tsx            # Таблица матчей
+│   ├── Pagination.tsx             # Пагинация
+│   └── StatusPanel.tsx            # Панель статуса/ошибок
+│
+├── api/
+│   ├── client.ts                  # Конфиг Axios
+│   └── soccerStat.ts              # API методы
+│
+├── types/
+│   └── football.ts                # TypeScript типы
+│
+├── utils/
+│   ├── list.ts                    # Утилиты для работы со списками
+│   └── matches.ts                 # Утилиты для матчей
+│
+├── App.tsx                        # Главная компонента
+├── main.tsx                       # Точка входа
+└── index.css                      # Глобальные стили
+```
+
+---
+
+## API интеграция
+
+**Эндпоинты, используемые в приложении:**
+
+| Функция | Эндпоинт | Метод |
+|---------|----------|-------|
+| Список лиг | `/competitions` | GET |
+| Матчи лиги | `/competitions/{id}/matches` | GET |
+| Список команд | `/teams` | GET |
+| Матчи команды | `/teams/{id}/matches` | GET |
+| Информация команды | `/teams/{id}` | GET |
+
+**Фильтрация по датам:**
+```
+GET /competitions/{id}/matches?dateFrom=2024-01-01&dateTo=2024-12-31
+GET /teams/{id}/matches?dateFrom=2024-01-01&dateTo=2024-12-31
+```
+
+---
+
+## Доступные команды
+
+```bash
+# Разработка с HMR
+npm run dev
+
+# Собрать для production
+npm run build
+
+# Проверить собранное приложение локально
+npm run preview
+
+# Запустить ESLint
+npm run lint
+
+# Исправить ошибки линтера автоматически
+npm run lint -- --fix
+```
+
+---
+
+
+## Адаптивность
+
+Протестировано на экранах:
+- 📱 iPhone 14 (390×844)
+- 📱 iPad (820×1180)
+- 💻 Desktop (1920×1080, 1280×720)
+
+---
+
+## Локализация
+
+- **Язык:** Русский
+- **Временные зоны:** Автоматический перевод из UTC в локальное время пользователя
+- **Формат дат:** ДД.ММ.ГГГГ
+- **Формат времени:** ЧЧ.ММ
+
+Реализовано через `Intl.DateTimeFormat` API
+
+---
+
+## Зависимости
+
+```json
+{
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2",
+    "@tanstack/react-query": "^5.95.2",
+    "axios": "^1.13.6"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.3",
+    "vite": "^8.0.1",
+    "eslint": "^9.39.4"
+  }
+}
+```
+
+---
+
+## Обработка ошибок
+
+Приложение корректно обрабатывает:
+-  Ошибки API (401, 429, 5xx)
+-  Отсутствие интернета
+-  Превышение лимита запросов
+-  Невалидный API токен
+
+Все ошибки отображаются в `StatusPanel` для пользователя.
+
+
+---
+
+## Безопасность
+
+- API токен хранится в `.env` (не в коде)
+- Нет чувствительных данных в git
+- Правильная обработка CORS через vite proxy
+
+---
+
+
+## Автор
+
+Герасимов Михаил, Тестовое задание для Simbir Soft Front-end
